@@ -38,35 +38,35 @@ except Exception as e:
 
 Les contributions sont toujours les bienvenues ! Si vous souhaitez contribuer, veuillez forker le dépôt et proposer une pull request.
 
-aerocast/
-│
-├── aerocast/                        # Package principal
-│   ├── __init__.py                  # Initialise le package
-│   ├── __main__.py                  # Point d'entrée pour exécution du package
-│   ├── api.py                       # Gestion des appels API
-│   ├── data_manager.py              # Manipulation et gestion des données
-│   ├── tts_manager.py               # Gestion de la conversion texte-voix
-│   ├── weather.py                   # Gestion spécifique des données météo
-│   ├── airport.py                   # Gestion spécifique des données aéroport
-│   └── utils/                       # Sous-package pour les utilitaires
-│       ├── __init__.py              # Initialise le sous-package utils
-│       └── helpers.py               # Fonctions utilitaires
-│
-├── tests/                           # Tests unitaires et autres tests
-│   ├── __init__.py                  # Initialise le package de tests
-│   ├── test_api.py                  # Tests pour api.py
-│   ├── test_data_manager.py         # Tests pour data_manager.py
-│   ├── test_tts_manager.py          # Tests pour tts_manager.py
-│   ├── test_weather.py              # Tests pour weather.py
-│   └── test_airport.py              # Tests pour airport.py
-│
-├── docs/                            # Documentation du projet
-│   └── index.md                     # Fichier Markdown pour la documentation de base
-│
-├── setup.py                         # Script de setup pour le packaging et l'installation
-├── requirements.txt                 # Dépendances du projet
-├── README.md                        # Informations générales et guide d'utilisation
-└── LICENSE                          # Fichier de licence
+    aerocast/
+    │
+    ├── aerocast/                        # Package principal
+    │   ├── __init__.py                  # Initialise le package
+    │   ├── __main__.py                  # Point d'entrée pour exécution du package
+    │   ├── api.py                       # Gestion des appels API
+    │   ├── data_manager.py              # Manipulation et gestion des données
+    │   ├── tts_manager.py               # Gestion de la conversion texte-voix
+    │   ├── weather.py                   # Gestion spécifique des données météo
+    │   ├── airport.py                   # Gestion spécifique des données aéroport
+    │   └── utils/                       # Sous-package pour les utilitaires
+    │       ├── __init__.py              # Initialise le sous-package utils
+    │       └── helpers.py               # Fonctions utilitaires
+    │
+    ├── tests/                           # Tests unitaires et autres tests
+    │   ├── __init__.py                  # Initialise le package de tests
+    │   ├── test_api.py                  # Tests pour api.py
+    │   ├── test_data_manager.py         # Tests pour data_manager.py
+    │   ├── test_tts_manager.py          # Tests pour tts_manager.py
+    │   ├── test_weather.py              # Tests pour weather.py
+    │   └── test_airport.py              # Tests pour airport.py
+    │
+    ├── docs/                            # Documentation du projet
+    │   └── index.md                     # Fichier Markdown pour la documentation de base
+    │
+    ├── setup.py                         # Script de setup pour le packaging et l'installation
+    ├── requirements.txt                 # Dépendances du projet
+    ├── README.md                        # Informations générales et guide d'utilisation
+    └── LICENSE                          # Fichier de licence
 
 ## Licence
 
