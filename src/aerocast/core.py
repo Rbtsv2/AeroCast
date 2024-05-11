@@ -1,9 +1,10 @@
 from colorama import Fore, Back, Style
 import os
-import pygame
+from playsound3 import playsound
 import re
 import json
 from datetime import datetime
+import time
 import locale
 
 try:
@@ -20,7 +21,6 @@ DATA_PROVIDER = "https://aviationweather.gov"
 
 def info(OACI)->bool:
     print(Fore.GREEN + "✅ CHARGEMENT DU MODULE METEO" + Style.RESET_ALL)
-    pygame.mixer.init()
 
     # Obtenir les données météo et les informations sur l'aéroport
     weather_data = get_meteo(OACI)  
@@ -74,43 +74,15 @@ def info(OACI)->bool:
     airport_tts = gTTS(report, lang="fr", slow=False)
     airport_tts.save("report.mp3")
 
-    meteo_sound = pygame.mixer.Sound("Sounds/radio_deb.mp3")
-    meteo_sound.play()
-    pygame.time.wait(int(meteo_sound.get_length() * 600))  
-
-    pygame.time.delay(2000)  
-
-    meteo_sound = pygame.mixer.Sound("airport.mp3")
-    meteo_sound.play()
-    pygame.time.wait(int(meteo_sound.get_length() * 1000))  
-
-    alert_sound = pygame.mixer.Sound("Sounds/radio_fn.mp3")
-    alert_sound.play()
-    pygame.time.wait(int(alert_sound.get_length() * 1000)) 
-
-    airport_sound = pygame.mixer.Sound("meteo.mp3")
-    airport_sound.play()
-    pygame.time.wait(int(airport_sound.get_length() * 1000))  
-
-    alert_sound = pygame.mixer.Sound("Sounds/radio_fn.mp3")
-    alert_sound.play()
-    pygame.time.wait(int(alert_sound.get_length() * 1000)) 
-
-    airport_taf = pygame.mixer.Sound("taf.mp3")
-    airport_taf.play()
-    pygame.time.wait(int(airport_taf.get_length() * 1000)) 
-
-    alert_sound = pygame.mixer.Sound("Sounds/radio_fn.mp3")
-    alert_sound.play()
-    pygame.time.wait(int(alert_sound.get_length() * 1000)) 
-
-    report_sound = pygame.mixer.Sound("report.mp3")
-    report_sound.play()
-    pygame.time.wait(int(report_sound.get_length() * 1000))
-
-    alert_sound = pygame.mixer.Sound("Sounds/radio_fn.mp3")
-    alert_sound.play()
-    pygame.time.wait(int(alert_sound.get_length() * 1000)) 
+    playsound("Sounds/radio_deb.mp3")
+    playsound("airport.mp3")
+    playsound("Sounds/radio_fn.mp3")
+    playsound("meteo.mp3")
+    playsound("Sounds/radio_fn.mp3")
+    playsound("taf.mp3")
+    playsound("Sounds/radio_fn.mp3")
+    playsound("report.mp3")
+    playsound("Sounds/radio_fn.mp3")
 
     print(Fore.GREEN + f"✅ METAR {airport_info['Name']}: {weather_data['rawOb']}" + Style.RESET_ALL)
 
@@ -370,3 +342,6 @@ def extract_airport_info(raw_json):
     airport_info["Frequencies"] = frequencies_info
 
     return airport_info
+
+if __name__ == '__main__':
+    info('KJFK')

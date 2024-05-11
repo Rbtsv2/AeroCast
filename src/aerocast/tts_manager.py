@@ -1,6 +1,6 @@
 # aerocast/tts_manager.py
 from gtts import gTTS
-from pygame import mixer
+from playsound3 import playsound
 import time
 
 class TextToSpeechManager:
@@ -14,8 +14,4 @@ class TextToSpeechManager:
         return filename
     
     def play_file(self, filename):
-        mixer.init()
-        airport_sound = mixer.music.load(filename)
-        mixer.music.play()
-        while mixer.music.get_busy(): # wait for music to finish playing, otherwise programs/sound quits immediately after it starts
-            time.sleep(1)
+        playsound(filename)
