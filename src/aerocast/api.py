@@ -27,7 +27,7 @@ class API:
     def _request_get(self, endpoint, **kwargs):
         self.request_lock.acquire()
         kwargs['params'].update({'format': 'json'})
-        result = self.request_session.get(f"{API.BASE_URL}/{endpoint}", headers={'Accept':'application/json'}, **kwargs)
+        result = self.request_session.get(f"{API.BASE_URL}/{endpoint}", **kwargs)
         self.request_lock.release()
         return result
 
