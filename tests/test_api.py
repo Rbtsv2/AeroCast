@@ -2,8 +2,6 @@
 import unittest
 from aerocast.api import API
 
-BASE_URL = 'https://aviationweather.gov/api'
-
 class TestAPI(unittest.TestCase):
     def test_metar_data(self):
         api = API()
