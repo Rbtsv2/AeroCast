@@ -24,7 +24,7 @@ class WeatherManager:
             print(result)
             tts_weather = TextToSpeechManager(result, self.lang)
             tts_weather.save_to_file("weather_info.mp3")
-            #tts_weather.play_file("weather_info.mp3")
+            tts_weather.play_file("weather_info.mp3")
         return result
 
     def get_wind_speed(self):
