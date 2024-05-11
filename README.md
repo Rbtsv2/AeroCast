@@ -19,16 +19,21 @@ pip install aerocast
 
 ## Exemple d'utilisation
 
-Pour obtenir les informations météorologiques de l'aéroport Charles de Gaulle (OACI : CDG), utilisez le code suivant :
+Pour obtenir les informations météorologiques de l'aéroport de New York - John-F.-Kennedy (OACI : KJFK), utilisez le code suivant :
 
 ```python
 from aerocast import WeatherManager
 
-weather_manager = WeatherManager('CDG')
+#string OACI (ex: KJFK)
+#string PAYS (déclanche la lecture vocale ex: FR)
+weather = WeatherManager('KJFK', 'FR')
 
 try:
-    weather_info = weather_manager.get_weather_info()
-    print(weather_info)
+
+    temperature = weather.get_temperature()
+    print(temperature)
+
+
 except Exception as e:
     print(f"Une erreur est survenue lors de la récupération des données météo : {e}")
 
