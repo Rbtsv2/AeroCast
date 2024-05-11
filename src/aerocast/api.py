@@ -11,7 +11,6 @@ class API:
             if response.ok:
                 return response.json()
             else:
-                raise ValueError("Failed to fetch weather data")
+                raise ValueError(f"Failed to fetch weather data (HTTP {r.status_code}")
         except requests.RequestException as e:
             print(f"API Error: {e}")
-
