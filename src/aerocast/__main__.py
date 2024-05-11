@@ -9,15 +9,15 @@ def main():
     # Exemple d'utilisation des gestionnaires
     airport_code = "KJFK"  # Code OACI de l'aéroport Charles de Gaulle
     weather_manager = WeatherManager(airport_code)
-    airport_manager = AirportManager(airport_code)
+    # airport_manager = AirportManager(airport_code)
     
     # Récupérer les informations
     #print(weather_manager.summarize())
     print(weather_manager.get_temperature())
     #print(weather_manager.get_wind_speed())
-    airport_info = airport_manager.get_airport_info()
+    # airport_info = airport_manager.get_airport_info()
     
-    #print(airport_info.summarize())
+    # print(airport_manager.summarize())
     
     # Texte à parole pour les informations récupérées
     tts_weather = TextToSpeechManager(weather_manager.summarize())

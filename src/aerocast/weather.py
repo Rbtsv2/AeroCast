@@ -11,7 +11,7 @@ class WeatherManager:
         weather_data = DataManager.get_weather_data(self.airport_code)
         if not weather_data:
             raise ValueError("No weather data available")
-        self._weather_data = weather_data
+        return weather_data
          
     def get_temperature(self):
         weather_data = self.fetch_weather_data()

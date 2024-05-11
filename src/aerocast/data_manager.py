@@ -12,10 +12,10 @@ class DataManager:
 
     @staticmethod
     def get_weather_data(airport_code):
-        response = API.fetch_data('data/metar', {'ids': airport_code, 'format': 'json'})
-        return response
+        airports = API.fetch_data('data/metar', {'ids': airport_code, 'format': 'json'})
+        return airports[0] if len(airports) == 1 else airports
 
     @staticmethod
     def get_airport(airport_code):
         airports = API.fetch_data('data/airport', {'ids': airport_code, 'format': 'json'})
-        return airports[0] if len(airports) == 0 else filter(airports, airport_code)
+        return airports[0] if len(airports) == 1 else DataManager.filter_by_iata(airports, airport_code)
