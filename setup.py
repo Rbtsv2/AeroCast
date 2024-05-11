@@ -31,12 +31,13 @@ setup(
         'Topic :: Scientific/Engineering :: Atmospheric Science',
     ],
     keywords=['weather', 'airport', 'METAR', 'TAF', 'aviation', 'forecast'],
-    install_requires=[
-        # Add dependencies here. Example:
-        # 'requests',
-        # 'pandas',
-    ],
+    install_requires=['requests', 'gtts', 'pygame'],
     python_requires='>=3.7',
     include_package_data=True,
-    zip_safe=False
+    zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'aerocast = aerocast.__main__:main'
+        ]
+    }
 )
