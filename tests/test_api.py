@@ -13,6 +13,11 @@ class TestAPI(unittest.TestCase):
         data = api.get_airport_data('KJFK')
         self.assertIsInstance(data, dict)
 
+    def test_airport_data_with_iata(self):
+        api = API()
+        data = api.get_airport_data('CDG')
+        self.assertIsInstance(data, dict)        
+
     def test_fetch_metar(self):
         data = API.fetch_data('data/metar', {'ids': 'KJFK', 'format': 'json'})
         self.assertIsInstance(data, list)
