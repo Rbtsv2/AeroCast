@@ -14,7 +14,7 @@ AeroCast est un package Python qui fournit des informations météorologiques es
 Vous pouvez installer AeroCast directement via pip depuis PyPI :
 
 ```bash
-pip install AeroCast
+pip install aerocast
 ```
 
 ## Exemple d'utilisation
