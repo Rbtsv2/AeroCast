@@ -13,8 +13,6 @@ class DataManager:
     @staticmethod
     def get_weather_data(airport_code):
         response = API.fetch_data('data/metar', {'ids': airport_code, 'format': 'json'})
-        print(response)
-        exit() 
         return response
 
     @staticmethod

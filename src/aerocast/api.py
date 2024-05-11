@@ -14,4 +14,4 @@ class API:
                 raise ValueError("Failed to fetch weather data")
         except requests.RequestException as e:
             print(f"API Error: {e}")
-            return None
+
