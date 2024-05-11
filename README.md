@@ -17,7 +17,7 @@ Vous pouvez installer AeroCast directement via pip depuis PyPI :
 pip install aerocast
 ```
 
-## Exemple d'utilisation
+## Exemple d'utilisation via pip
 
 Pour obtenir les informations météorologiques de l'aéroport de New York - John-F.-Kennedy (OACI : KJFK), utilisez le code suivant :
 
@@ -25,7 +25,7 @@ Pour obtenir les informations météorologiques de l'aéroport de New York - Joh
 from aerocast import WeatherManager
 
 #string OACI (ex: KJFK)
-#string PAYS (déclanche la lecture vocale ex: FR)
+#string Langue (déclanche la lecture vocale ex: FR)
 weather = WeatherManager('KJFK', 'FR')
 
 try:
@@ -72,6 +72,21 @@ Les contributions sont toujours les bienvenues ! Si vous souhaitez contribuer, v
     ├── requirements.txt                 # Dépendances du projet
     ├── README.md                        # Informations générales et guide d'utilisation
     └── LICENSE                          # Fichier de licence
+
+
+## Exemple d'utilisation en local (contributeur)
+
+Pour installer les dépendances nécessaires au fonctionnement d'AeroCast en local, naviguez jusqu'à la racine de votre projet et exécutez la commande appropriée. Cette méthode vous permet de gérer toutes les bibliothèques nécessaires directement depuis votre environnement de développement local.
+
+Assurez-vous que votre environnement Python est correctement configuré et activé avant de procéder à l'installation des dépendances.
+
+```bash
+mkdir /votre_chemin/aerocast
+cd /votres_chemin/aerocast
+git clone https://github.com/Rbtsv2/AeroCast.git .
+pip install -e .
+```
+
 
 ## Licence
 
