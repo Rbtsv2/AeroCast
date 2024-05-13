@@ -7,6 +7,8 @@ from datetime import datetime
 import time
 import locale
 
+from .api import API
+
 try:
     from gtts import gTTS
     import requests
@@ -18,6 +20,8 @@ except Exception as e:
 
 locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')
 DATA_PROVIDER = "https://aviationweather.gov"
+
+FIELDNAMES = ['metar_id', 'icaoId', 'receiptTime', 'obsTime', 'reportTime', 'temp', 'dewp', 'wdir', 'wspd', 'visib', 'altim', 'lat', 'lon', 'elev', 'lat', 'lon', 'elev', 'prior', 'name', 'rawOb', 'clouds']
 
 def info(OACI)->bool:
     print(Fore.GREEN + "✅ CHARGEMENT DU MODULE METEO" + Style.RESET_ALL)
@@ -179,47 +183,26 @@ def get_airport_info(airport)->tuple:
         return ("000","0","1013 hPa")
     return airport_info
 
-def get_meteo(airport)->tuple:
+def get_meteo(airport: str)->tuple:
     """
     Permet de créer un tuple contenant les informations météos de l'aéroport
     Pré  : str : code OACI de l'aéroport
     Post : tuple contenant : le cap du vent, la vitesse du vent, la pression atmosphérique (qnh) en hPa
     """
     #https://aviationweather.gov/api/data/airport?ids=LFBO info airport
-    url = f"{DATA_PROVIDER}/api/data/metar?ids={airport}&format=json"
-    response = requests.get(url)
- 
-    if response.status_code == 200:
-      
-        if response.text == '[]':
-            print(Fore.YELLOW + "Aucune donnée METAR trouvée dans la réponse, nous allons essyer une autre approche" + Style.RESET_ALL)
-            exit()
- 
-        metar_info = extract_metar_info(response.text)
-        
+    try:
+        api = API()
+        metar_data = API.get_metar_data(airport)
+        metar_info = extract_metar_info(metar_data)
+        return metar_info
+    except Exception as e:
+        raise
 
-    else:
-        print(f"Erreur lors de la récupération des informations météo. (Code d'erreur : {response.status_code})")
-        return ("000","0","1013 hPa")
-    return metar_info
-
-def extract_metar_info(raw_json):
-    
-    data = json.loads(raw_json)
-    metar_info = {}
-    metar_data = data[0]
-    # print(metar_data)
-    # exit()
+def extract_metar_info(data: dict):
     # Extraire les informations directement accessibles
-    metar_info['metar_id'] = metar_data['metar_id']
-    metar_info['icaoId'] = metar_data['icaoId']
-    metar_info['receiptTime'] = metar_data['receiptTime']
-    metar_info['obsTime'] = metar_data['obsTime']
-    metar_info['reportTime'] = metar_data['reportTime']
-    metar_info['temp'] = metar_data['temp']
-    metar_info['dewp'] = metar_data['dewp']
-    metar_info['wdir'] = metar_data['wdir']
-    metar_info['wspd'] = metar_data['wspd']
+    metar_info = {k:v for k,v in metar_data.items()}
+
+    metar_info['name'] = metar_data['name'].split(',')[0].strip()
 
     visibility_miles = metar_data['visib']
     if isinstance(visibility_miles, float):
@@ -230,24 +213,9 @@ def extract_metar_info(raw_json):
         # La visibilité est sous forme de texte, on la conserve telle quelle
         metar_info['visib'] = visibility_miles
 
-    metar_info['altim'] = metar_data['altim']
-    metar_info['lat'] = metar_data['lat']
-    metar_info['lon'] = metar_data['lon']
-    metar_info['elev'] = metar_data['elev']
-    metar_info['prior'] = metar_data['prior']
-
-    complete_name = metar_data['name']
-    name = complete_name.split(',')
-
-    metar_info['name'] = name[0].strip()
-
-
-    metar_info['rawOb'] = metar_data['rawOb']
-
-    metar_info['clouds'] = metar_data['clouds'][0]['cover']
-    metar_info['clouds_base'] = metar_data['clouds'][0]['base']
-    metar_info['clouds_text'] = traduire_abreviation(metar_data['clouds'][0]['cover'])
-
+    metar_info['clouds'] = data['clouds'][0]['cover']
+    metar_info['clouds_base'] = data['clouds'][0]['base']
+    metar_info['clouds_text'] = traduire_abreviation(data['clouds'][0]['cover'])
 
     return metar_info
 
