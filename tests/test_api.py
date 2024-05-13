@@ -26,5 +26,11 @@ class TestAPI(unittest.TestCase):
         data = API.fetch_data('data/airport', {'ids': 'KJFK', 'format': 'json'})
         self.assertIsInstance(data, list)
 
+    def test_mandatory_fields(self):
+        api = API()
+        data = api.get_metar_data('KJFK')
+        for fieldname in ['metar_id', 'icaoId', 'receiptTime', 'obsTime', 'reportTime', 'temp', 'dewp', 'wdir', 'wspd', 'visib', 'altim', 'lat', 'lon', 'elev', 'lat', 'lon', 'elev', 'prior', 'name', 'rawOb', 'clouds']:
+            self.assertIn(fieldname, data)
+
 if __name__ == '__main__':
     unittest.main()
