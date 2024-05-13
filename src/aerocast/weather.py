@@ -79,14 +79,28 @@ class WeatherManager:
 
 
     def save_audio(self, tts_weather):
-        tts_weather.save_to_file(self.AUDIO_OUTPUT_PATH)
-        if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
-            print("File saved successfully and contains data")
-        else:
-            print("Failed to save file or file is empty")
+        success = False
+        try:
+            tts_weather.save_to_file(self.AUDIO_OUTPUT_PATH)
+            if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
+                success = True
+                print("File saved successfully and contains data")
+            else:
+                print("Failed to save file or file is empty")
+        except Exception as e:
+            print(e)
+        finally:
+            return success
 
     def play_audio(self, tts_weather):
-        if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
-            tts_weather.play_file(self.AUDIO_OUTPUT_PATH)
-        else:
-            print("Cannot play audio because the file does not exist or is empty")
+        success = False
+        try:
+            if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
+                tts_weather.play_file(self.AUDIO_OUTPUT_PATH)
+                success = True
+            else:
+                print("Cannot play audio because the file does not exist or is empty")
+        except Exception as e:
+            print(e)
+        finally:
+            return success
