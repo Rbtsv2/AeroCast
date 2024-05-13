@@ -15,5 +15,13 @@ class TestWeatherManager(unittest.TestCase):
         wm = WeatherManager('KJFK', lang=None)
         self.assertIsInstance(wm.get_wind_speed(), str)
 
+    def test_save_audio(self):
+        wm = WeatherManager('KJFK', lang=None)
+        self.assertIsInstance(wm.save_audio(), bool)
+
+    def test_play_audio(self):
+        wm = WeatherManager('KJFK', lang=None)
+        self.assertIsInstance(wm.play_audio(), bool)
+
 if __name__ == '__main__':
     unittest.main()
