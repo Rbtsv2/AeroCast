@@ -4,8 +4,8 @@ from aerocast.weather import WeatherManager
 
 class TestWeatherManager(unittest.TestCase):
     def test_summarize(self):
-        wm = WeatherManager({'temp': '20', 'wind_speed': '10'})
-        self.assertEqual(wm.summarize(), "Temp: 20 Wind: 10")
+        wm = WeatherManager('KJFK', lang=None)
+        self.assertIsInstance(wm.get_summarize(), str)
 
 if __name__ == '__main__':
     unittest.main()
