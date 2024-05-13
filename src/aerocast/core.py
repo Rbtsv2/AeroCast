@@ -200,11 +200,11 @@ def get_meteo(airport: str)->tuple:
 
 def extract_metar_info(data: dict):
     # Extraire les informations directement accessibles
-    metar_info = {k:v for k,v in metar_data.items()}
+    metar_info = {k:v for k,v in data.items()}
 
-    metar_info['name'] = metar_data['name'].split(',')[0].strip()
+    metar_info['name'] = data['name'].split(',')[0].strip()
 
-    visibility_miles = metar_data['visib']
+    visibility_miles = data['visib']
     if isinstance(visibility_miles, float):
         # La visibilité est en miles, on la convertit en kilomètres
         visibility_km = round(visibility_miles * 1.60934, 2)
