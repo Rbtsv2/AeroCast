@@ -1,17 +1,22 @@
 # aerocast/__main__.py
 from aerocast.weather import WeatherManager
 from aerocast.airport import AirportManager
+import gettext, locale
 
+lang_translations = gettext.translation('messages', localedir='locales', fallback=True)
+_ = lang_translations.gettext
 
 def main():
 
-    print("Bienvenue dans AeroCast, votre gestionnaire de météo d'aéroport!")
+    print(_("Welcome to AeroCast, your airport weather manager!"))
     
     # Exemple d'utilisation des gestionnaires
     airport_code = "KJFK"  # Code OACI de l'aéroport Charles de Gaulle
     lang = "fr"
 
-    weather = WeatherManager(airport_code, lang)
+    weather = WeatherManager(airport_code) # , lang
+    WeatherManager.filter_by_iata([], 'KJFK')
+    exit()
     summary = weather.get_summarize()
     print(summary)
     weather.play_text(summary)

@@ -3,11 +3,21 @@ from .api import API
 from .tts_manager import TextToSpeechManager
 from .converter import name_converter, distance_converter, Distance, ConverterDict
 import os
+import gettext, locale
+
+lang_translations = gettext.translation('messages', localedir='locales', fallback=True)
+_ = lang_translations.gettext
 
 DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
 class WeatherManager:
-    def __init__(self, airport_code, lang):
+    def __init__(self, airport_code, lang=None):
+        if lang is None:
+            language, charset = locale.getdefaultlocale()
+            print(language, charset)
+            language, country = language.split('_', 2)
+            print(language, country)
+            print(_("No airport matching %s") % airport_code)
         self.airport_code = airport_code
         self.lang = lang
         self.tts_manager = TextToSpeechManager(lang)
@@ -20,13 +30,13 @@ class WeatherManager:
         for airport in airports:
             if airport['iata'] == airport_code.upper():
                 return airport
-        raise ValueError(f"No airport matching {airport_code}")
+        raise ValueError(_("No airport matching %s") % airport_code)
     
     def get_weather_data(self):
         airports = API.fetch_data('data/metar', {'ids': self.airport_code, 'format': 'json'})
         weather_data = airports[0] if len(airports) == 1 else airports
         if not weather_data:
-            raise ValueError("No weather data available")
+            raise ValueError(_("No weather data available"))
         return weather_data
 
     def get_airport_data(self):
