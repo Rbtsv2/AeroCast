@@ -70,7 +70,7 @@ class WeatherManager:
             "CLR": "d'un ciel clair",
             "FEW": "de quelques nuages de 1 à 2 octas",
             "SCT": "de nuages épars de 3 à 4 octas",
-            "BKN": "de nuages fragmentés de 5 à 7 octas",
+            "BKN": "des nuages fragmentés de 5 à 7 octas",
             "OVC": "d'un Ciel couvert (8 octas)",
             "VV": "d'un ciel invisible en dessous de la base des nuages",
             "CB": "de cumulonimbus",
@@ -135,7 +135,7 @@ class WeatherManager:
         # Construction du résumé météorologique
         meteo_text = [
             f"Le METAR indique un vent de {wind_direction} degrés, avec une vitesse de {wind_speed} nœuds.",
-            f"D'après les codes de temps, nous avons {', '.join(clouds_text)}.",
+            f"Couverture nuageuse : {', '.join(clouds_text)}.",
             f"La distance de visibilité est de {visibility} kilomètres.",
             f"La température est de {temperature} degrés Celsius, et le point de rosée est de {dew_point} degrés Celsius.",
             f"La pression atmosphérique QNH est située à {pressure} hPa."
