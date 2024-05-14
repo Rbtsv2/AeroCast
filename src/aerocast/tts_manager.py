@@ -4,14 +4,18 @@ from playsound3 import playsound
 import time
 
 class TextToSpeechManager:
-    def __init__(self, text, lang='fr'):
-        self.text = text
+    def __init__(self, lang, filename='info.mp3'):
         self.lang = lang
-
-    def save_to_file(self, filename):
-        tts = gTTS(self.text, lang=self.lang)
-        tts.save(filename)
-        return filename
+        self.filename = filename
     
-    def play_file(self, filename):
-        playsound(filename)
+    def play_text(self, text: str):
+        success = False
+        try:
+            tts = gTTS(text, lang=self.lang)
+            tts.save(self.filename)
+            playsound(self.filename)
+            success = True
+        except Exception as e:
+            print(e)
+        finally:
+            return success

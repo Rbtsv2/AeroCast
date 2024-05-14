@@ -7,12 +7,13 @@ import os
 DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
 class WeatherManager:
-
-    AUDIO_OUTPUT_PATH = "info.mp3"
-
     def __init__(self, airport_code, lang):
         self.airport_code = airport_code
         self.lang = lang
+        self.tts_manager = TextToSpeechManager(lang)
+
+    def play_text(self, text):
+        self.tts_manager.play_text(text)
 
     @staticmethod
     def filter_by_iata(airports, airport_code: str):
@@ -42,25 +43,11 @@ class WeatherManager:
     def get_temperature(self):
         weather_data = self.get_weather_data()
         result = f"{weather_data.get('temp', 'N/A')}"
-
-        if self.lang:
-            result = f"La température est de {weather_data.get('temp', 'N/A')}°C"
-            tts_weather = TextToSpeechManager(result, self.lang)
-            self.save_audio(tts_weather)
-            self.play_audio(tts_weather)
-
         return result
 
     def get_wind_speed(self):
         weather_data = self.get_weather_data()
         result = f"{weather_data.get('wind_speed', 'N/A')}"
-    
-        if self.lang:
-            result = f"La vitesse du vent est de {weather_data.get('temp', 'N/A')} km/h"
-            tts_weather = TextToSpeechManager(result, self.lang)
-            self.save_audio(tts_weather)
-            self.play_audio(tts_weather)
-
         return result
 
     @staticmethod
@@ -142,31 +129,3 @@ class WeatherManager:
         ]
 
         return '\n'.join(meteo_text)
-
-
-
-    def save_audio(self, tts_weather):
-        success = False
-        try:
-            tts_weather.save_to_file(self.AUDIO_OUTPUT_PATH)
-            if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
-                success = True
-            else:
-                raise Exception("Failed to save file or file is empty")
-        except Exception as e:
-            print(e)
-        finally:
-            return success
-
-    def play_audio(self, tts_weather):
-        success = False
-        try:
-            if os.path.exists(self.AUDIO_OUTPUT_PATH) and os.path.getsize(self.AUDIO_OUTPUT_PATH) > 0:
-                tts_weather.play_file(self.AUDIO_OUTPUT_PATH)
-                success = True
-            else:
-                raise Exception("Cannot play audio because the file does not exist or is empty")
-        except Exception as e:
-            print(e)
-        finally:
-            return success
