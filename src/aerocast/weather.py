@@ -1,7 +1,6 @@
 # aerocast/weather.py
 from .data_manager import DataManager
 from .tts_manager import TextToSpeechManager
-import threading
 import os
 
 class WeatherManager:
@@ -25,11 +24,8 @@ class WeatherManager:
         if self.lang:
             result = f"La température est de {weather_data.get('temp', 'N/A')}°C"
             tts_weather = TextToSpeechManager(result, self.lang)
-            thread_save = threading.Thread(target=self.save_audio, args=(tts_weather,))
-            thread_play = threading.Thread(target=self.play_audio, args=(tts_weather,))
-            thread_save.start()
-            thread_save.join()  # Attendre que la sauvegarde soit complète avant de lire
-            thread_play.start()
+            self.save_audio(tts_weather)
+            self.play_audio(tts_weather)
 
         return result
 
@@ -40,11 +36,8 @@ class WeatherManager:
         if self.lang:
             result = f"La vitesse du vent est de {weather_data.get('temp', 'N/A')} km/h"
             tts_weather = TextToSpeechManager(result, self.lang)
-            thread_save = threading.Thread(target=self.save_audio, args=(tts_weather,))
-            thread_play = threading.Thread(target=self.play_audio, args=(tts_weather,))
-            thread_save.start()
-            thread_save.join()  # Attendre que la sauvegarde soit complète avant de lire
-            thread_play.start()
+            self.save_audio(tts_weather)
+            self.play_audio(tts_weather)
 
         return result
 
