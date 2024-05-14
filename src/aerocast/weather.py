@@ -58,14 +58,14 @@ class WeatherManager:
 
         # Construction du résumé météorologique
         meteo_text = (
-            f"Le METAR indique un vent de {wind_direction} degrés, avec une vitesse de {wind_speed} nœuds. "
-            f"D'après les codes de temps, nous avons un {cloud_cover}, ce qui signifie des conditions {cloud_description}. "
-            f"La distance de visibilité est de {visibility} kilomètres. "
-            f"La température est de {temperature} degrés Celsius, et le point de rosée est de {dew_point} degrés Celsius. "
+            f"Le METAR indique un vent de {wind_direction} degrés, avec une vitesse de {wind_speed} nœuds.",
+            f"D'après les codes de temps, nous avons un {cloud_cover}, ce qui signifie des conditions {cloud_description}.",
+            f"La distance de visibilité est de {visibility} kilomètres.",
+            f"La température est de {temperature} degrés Celsius, et le point de rosée est de {dew_point} degrés Celsius.",
             f"La pression atmosphérique QNH est située à {pressure} hPa."
         )
 
-        return meteo_text
+        return '\n'.join(meteo_text)
 
 
 

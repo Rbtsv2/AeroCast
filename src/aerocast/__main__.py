@@ -13,7 +13,7 @@ def main():
 
     weather = WeatherManager(airport_code, lang)
 
-    weather.get_summarize()
+    print(weather.get_summarize())
     #weather.get_wind_speed()
     #weather.get_temperature()
 
