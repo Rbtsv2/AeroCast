@@ -1,3 +1,5 @@
+from collections import UserDict
+
 class Celsius:
     '''Descriptor for celsius.'''
 
@@ -98,15 +100,10 @@ def temp_converter(temp: int) -> (int, float):
 
 FIELDNAME_UNITS = {'temp': Temperature, 'visib': Distance}
 
-class ConverterDict(dict):
+class ConverterDict(UserDict):
     """docstring for ClassName"""
     def __init__(self, dict=None):
-        self.data = {}
-        self.units = {}
-        if dict is not None:
-            self.data.update(dict)
-            # for fieldname, unit in FIELDNAME_UNITS.items():
-            #     self.data[fieldname] = unit(self.data[fieldname])
+        UserDict.__init__(self, dict)
 
     def __getitem__(self, attr):
         if attr in self.data:
@@ -114,11 +111,7 @@ class ConverterDict(dict):
         else:
             attr, unit = attr.split('_', 2)
             converter = FIELDNAME_UNITS[attr]()
+            converter.celsius = self.data[attr]
             if hasattr(converter, unit):
-                return getattr(converter, unit)
+                return round(getattr(converter, unit), 2)
         raise KeyError
-
-if __name__ == '__main__':
-    data = {'temp': 0}
-    data = ConverterDict(data)
-    print(data['temp_celsius'])

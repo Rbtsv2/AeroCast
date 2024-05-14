@@ -8,7 +8,7 @@ import time
 import locale
 
 from api import API
-from converter import name_converter, distance_converter, temp_converter
+from converter import name_converter, distance_converter, temp_converter, ConverterDict
 
 try:
     from gtts import gTTS
@@ -208,7 +208,7 @@ def extract_metar_info(data: dict, converters=DEFAULT_CONVERTERS):
     data['clouds_base'] = clouds['base']
     data['clouds_text'] = traduire_abreviation(clouds['cover'])
 
-    return data
+    return ConverterDict(data)
 
 def traduire_abreviation(abreviation, conditions_meteo="", probabilite="", heure=""):
     abreviations = {
