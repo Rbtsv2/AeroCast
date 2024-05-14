@@ -95,9 +95,6 @@ def distance_converter(distance: str | float) -> str | float:
     else:
         return distance
 
-def temp_converter(temp: int) -> (int, float):
-    return temp + 283.15
-
 FIELDNAME_UNITS = {'temp': Temperature, 'visib': Distance}
 
 class ConverterDict(UserDict):

@@ -8,7 +8,7 @@ import time
 import locale
 
 from .api import API
-from .converter import name_converter, distance_converter, temp_converter, ConverterDict
+from .converter import name_converter, distance_converter, ConverterDict
 
 try:
     from gtts import gTTS
@@ -22,7 +22,7 @@ except Exception as e:
 locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')
 DATA_PROVIDER = "https://aviationweather.gov"
 
-DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter, "temp": temp_converter}
+DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
 def info(OACI)->bool:
     print(Fore.GREEN + "✅ CHARGEMENT DU MODULE METEO" + Style.RESET_ALL)
