@@ -3,6 +3,8 @@ import unittest
 from aerocast.weather import WeatherManager
 from aerocast.tts_manager import TextToSpeechManager
 
+TTS_WEATHER = TextToSpeechManager('I am a test')
+
 class TestWeatherManager(unittest.TestCase):
     def test_temperature(self):
         wm = WeatherManager('KJFK', lang=None)
@@ -18,13 +20,11 @@ class TestWeatherManager(unittest.TestCase):
 
     def test_save_audio(self):
         wm = WeatherManager('KJFK', lang=None)
-        tts_weather = TextToSpeechManager('I am a test to save audio')
-        self.assertIsInstance(wm.save_audio(tts_weather), bool)
+        self.assertIsInstance(wm.save_audio(TTS_WEATHER), bool)
 
     def test_play_audio(self):
         wm = WeatherManager('KJFK', lang=None)
-        tts_weather = TextToSpeechManager('I am a test to play audio')
-        self.assertIsInstance(wm.play_audio(tts_weather), bool)
+        self.assertIsInstance(wm.play_audio(TTS_WEATHER), bool)
 
 if __name__ == '__main__':
     unittest.main()
