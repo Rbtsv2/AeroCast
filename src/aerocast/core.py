@@ -4,7 +4,6 @@ from playsound3 import playsound
 import re
 import json
 from datetime import datetime
-import time
 import locale
 
 from .api import API

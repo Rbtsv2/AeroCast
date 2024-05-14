@@ -1,7 +1,6 @@
 # aerocast/tts_manager.py
 from gtts import gTTS
 from playsound3 import playsound
-import time
 
 class TextToSpeechManager:
     def __init__(self, lang, filename='info.mp3'):
