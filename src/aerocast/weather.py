@@ -14,10 +14,8 @@ class WeatherManager:
     def __init__(self, airport_code, lang=None):
         if lang is None:
             language, charset = locale.getdefaultlocale()
-            print(language, charset)
             language, country = language.split('_', 2)
-            print(language, country)
-            print(_("No airport matching %s") % airport_code)
+            lang = language
         self.airport_code = airport_code
         self.lang = lang
         self.tts_manager = TextToSpeechManager(lang)
@@ -67,7 +65,7 @@ class WeatherManager:
             "CLR": "d'un ciel clair",
             "FEW": "de quelques nuages de 1 à 2 octas",
             "SCT": "de nuages épars de 3 à 4 octas",
-            "BKN": "des nuages fragmentés de 5 à 7 octas",
+            "BKN": _("some fragmented clouds from 5 to 7 oktas"),
             "OVC": "d'un Ciel couvert (8 octas)",
             "VV": "d'un ciel invisible en dessous de la base des nuages",
             "CB": "de cumulonimbus",
@@ -131,8 +129,8 @@ class WeatherManager:
 
         # Construction du résumé météorologique
         meteo_text = [
-            f"Le METAR indique un vent de {wind_direction} degrés, avec une vitesse de {wind_speed} nœuds.",
-            f"Couverture nuageuse : {', '.join(clouds_text)}.",
+            _("The METAR indicates a wind of %s degrees, with a speed of %s knots.") % (wind_direction, wind_speed),
+            _("Cloud cover : ") + ', '.join(clouds_text),
             f"La distance de visibilité est de {visibility} kilomètres.",
             f"La température est de {temperature} degrés Celsius, et le point de rosée est de {dew_point} degrés Celsius.",
             f"La pression atmosphérique QNH est située à {pressure} hPa."

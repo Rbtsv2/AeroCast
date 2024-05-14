@@ -15,8 +15,6 @@ def main():
     lang = "fr"
 
     weather = WeatherManager(airport_code) # , lang
-    WeatherManager.filter_by_iata([], 'KJFK')
-    exit()
     summary = weather.get_summarize()
     print(summary)
     weather.play_text(summary)

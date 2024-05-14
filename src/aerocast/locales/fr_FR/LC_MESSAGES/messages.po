@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-14 07:00+0200\n"
-"PO-Revision-Date: 2024-05-14 07:00+0200\n"
+"POT-Creation-Date: 2024-05-14 07:15+0200\n"
+"PO-Revision-Date: 2024-05-14 07:15+0200\n"
 "Last-Translator: DarkRedman <contact@darkredman.fr>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -25,14 +25,27 @@ msgstr ""
 msgid "Welcome to AeroCast, your airport weather manager!"
 msgstr "Bienvenue dans AeroCast, votre gestionnaire de météo d'aéroport!"
 
-#: weather.py:20 weather.py:33
+#: weather.py:31
 #, python-format
 msgid "No airport matching %s"
 msgstr "Pas d'aéroport correspondant %s"
 
-#: weather.py:39
+#: weather.py:37
 msgid "No weather data available"
 msgstr "Pas d'information météo disponible"
+
+#: weather.py:68
+msgid "some fragmented clouds from 5 to 7 oktas"
+msgstr "des nuages fragmentés de 5 à 7 octas"
+
+#: weather.py:132
+#, python-format
+msgid "The METAR indicates a wind of %s degrees, with a speed of %s knots."
+msgstr "Le METAR indique un vent de %s degrés, avec une vitesse de %s nœuds."
+
+#: weather.py:133
+msgid "Cloud cover  : "
+msgstr "Couverture nuageuse : "
 
 #~ msgid "No airport matching {}"
 #~ msgstr "Pas d'aéroport correspondant {}"
