@@ -7,7 +7,8 @@ from datetime import datetime
 import time
 import locale
 
-from .api import API
+from api import API
+from converter import name_converter, distance_converter, temp_converter
 
 try:
     from gtts import gTTS
@@ -21,7 +22,7 @@ except Exception as e:
 locale.setlocale(locale.LC_TIME, 'fr_FR.utf8')
 DATA_PROVIDER = "https://aviationweather.gov"
 
-FIELDNAMES = ['metar_id', 'icaoId', 'receiptTime', 'obsTime', 'reportTime', 'temp', 'dewp', 'wdir', 'wspd', 'visib', 'altim', 'lat', 'lon', 'elev', 'lat', 'lon', 'elev', 'prior', 'name', 'rawOb', 'clouds']
+DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter, "temp": temp_converter}
 
 def info(OACI)->bool:
     print(Fore.GREEN + "✅ CHARGEMENT DU MODULE METEO" + Style.RESET_ALL)
@@ -192,32 +193,22 @@ def get_meteo(airport: str)->tuple:
     #https://aviationweather.gov/api/data/airport?ids=LFBO info airport
     try:
         api = API()
-        metar_data = API.get_metar_data(airport)
+        metar_data = api.get_metar_data(airport)
         metar_info = extract_metar_info(metar_data)
         return metar_info
     except Exception as e:
         raise
 
-def extract_metar_info(data: dict):
+def extract_metar_info(data: dict, converters=DEFAULT_CONVERTERS):
     # Extraire les informations directement accessibles
-    metar_info = {k:v for k,v in data.items()}
+    for fieldname, converter in converters.items():
+        data[fieldname] = converter(data[fieldname])
 
-    metar_info['name'] = data['name'].split(',')[0].strip()
+    clouds = data['clouds'][0]
+    data['clouds_base'] = clouds['base']
+    data['clouds_text'] = traduire_abreviation(clouds['cover'])
 
-    visibility_miles = data['visib']
-    if isinstance(visibility_miles, float):
-        # La visibilité est en miles, on la convertit en kilomètres
-        visibility_km = round(visibility_miles * 1.60934, 2)
-        metar_info['visib'] = visibility_km
-    else:
-        # La visibilité est sous forme de texte, on la conserve telle quelle
-        metar_info['visib'] = visibility_miles
-
-    metar_info['clouds'] = data['clouds'][0]['cover']
-    metar_info['clouds_base'] = data['clouds'][0]['base']
-    metar_info['clouds_text'] = traduire_abreviation(data['clouds'][0]['cover'])
-
-    return metar_info
+    return data
 
 def traduire_abreviation(abreviation, conditions_meteo="", probabilite="", heure=""):
     abreviations = {
@@ -312,4 +303,4 @@ def extract_airport_info(raw_json):
     return airport_info
 
 if __name__ == '__main__':
-    info('KJFK')
+    print(get_meteo('KJFK'))
