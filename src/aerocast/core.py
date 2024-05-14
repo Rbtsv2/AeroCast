@@ -7,8 +7,8 @@ from datetime import datetime
 import time
 import locale
 
-from api import API
-from converter import name_converter, distance_converter, temp_converter, ConverterDict
+from .api import API
+from .converter import name_converter, distance_converter, temp_converter, ConverterDict
 
 try:
     from gtts import gTTS
@@ -301,6 +301,3 @@ def extract_airport_info(raw_json):
     airport_info["Frequencies"] = frequencies_info
 
     return airport_info
-
-if __name__ == '__main__':
-    print(get_meteo('KJFK'))
