@@ -53,8 +53,6 @@ class WeatherManager:
         # Récupérer les données météorologiques
         weather_data = self.fetch_weather_data()
 
-        print(weather_data)
-
         # Préparer les parties du message avec les données récupérées ou des valeurs par défaut
         wind_direction = weather_data.get('wdir', 'N/A')
         wind_speed = weather_data.get('wspd', 'N/A')
