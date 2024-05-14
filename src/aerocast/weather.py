@@ -30,7 +30,7 @@ class WeatherManager:
 
     def get_airport_data(self):
         airports = API.fetch_data('data/airport', {'ids': self.airport_code, 'format': 'json'})
-        return airports[0] if len(airports) == 1 else WeatherManager.filter_by_iata(airports, airport_code)
+        return airports[0] if len(airports) == 1 else WeatherManager.filter_by_iata(airports, self.airport_code)
 
     def extract_metar_info(data: dict, converters=DEFAULT_CONVERTERS):
         # Extraire les informations directement accessibles
