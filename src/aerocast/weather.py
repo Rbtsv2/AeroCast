@@ -1,5 +1,5 @@
 # aerocast/weather.py
-from .data_manager import DataManager
+from .api import API
 from .tts_manager import TextToSpeechManager
 import os
 
@@ -10,15 +10,27 @@ class WeatherManager:
     def __init__(self, airport_code, lang):
         self.airport_code = airport_code
         self.lang = lang
+
+    @staticmethod
+    def filter_by_iata(airports, airport_code: str):
+        for airport in airports:
+            if airport['iata'] == airport_code.upper():
+                return airport
+        raise ValueError(f"No airport matching {airport_code}")
     
-    def fetch_weather_data(self):
-        weather_data = DataManager.get_weather_data(self.airport_code)
+    def get_weather_data(self):
+        airports = API.fetch_data('data/metar', {'ids': self.airport_code, 'format': 'json'})
+        weather_data = airports[0] if len(airports) == 1 else airports
         if not weather_data:
             raise ValueError("No weather data available")
         return weather_data
+
+    def get_airport_data(self):
+        airports = API.fetch_data('data/airport', {'ids': self.airport_code, 'format': 'json'})
+        return airports[0] if len(airports) == 1 else WeatherManager.filter_by_iata(airports, airport_code)
          
     def get_temperature(self):
-        weather_data = self.fetch_weather_data()
+        weather_data = self.get_weather_data()
         result = f"{weather_data.get('temp', 'N/A')}"
 
         if self.lang:
@@ -30,7 +42,7 @@ class WeatherManager:
         return result
 
     def get_wind_speed(self):
-        weather_data = self.fetch_weather_data()
+        weather_data = self.get_weather_data()
         result = f"{weather_data.get('wind_speed', 'N/A')}"
     
         if self.lang:
@@ -44,7 +56,7 @@ class WeatherManager:
 
     def get_summarize(self):
         # Récupérer les données météorologiques
-        weather_data = self.fetch_weather_data()
+        weather_data = self.get_weather_data()
 
         # Préparer les parties du message avec les données récupérées ou des valeurs par défaut
         wind_direction = weather_data.get('wdir', 'N/A')
