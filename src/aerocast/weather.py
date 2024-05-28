@@ -5,19 +5,15 @@ from .converter import name_converter, distance_converter, Distance, ConverterDi
 import os
 import gettext, locale
 
-lang_translations = gettext.translation('messages', localedir='locales', fallback=True)
-_ = lang_translations.gettext
-
 DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
 api = API()
 
 class WeatherManager:
     def __init__(self, airport_code, lang=None):
-        if lang is None:
-            language, charset = locale.getdefaultlocale()
-            language, country = language.split('_', 2)
-            lang = language
+        # global lang_translations
+        # lang_translations = gettext.translation('messages', localedir='src/aerocast/locales', languages=[lang], fallback=True)
+        # _ = lang_translations.gettext
         self.airport_code = airport_code
         self.lang = lang
         self.tts_manager = TextToSpeechManager(lang)

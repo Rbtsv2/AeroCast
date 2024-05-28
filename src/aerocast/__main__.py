@@ -1,27 +1,34 @@
 # aerocast/__main__.py
 from aerocast.weather import WeatherManager
 from aerocast.airport import AirportManager
-import gettext, locale
-
-lang_translations = gettext.translation('messages', localedir='locales', fallback=True)
-_ = lang_translations.gettext
+import gettext, locale, argparse
 
 def main():
+    parser = argparse.ArgumentParser(prog='AeroCast', description='A program for providing weather information for airports.')
+    parser.add_argument('OACI')
+    parser.add_argument('-l', '--lang', default=None)
+    parser.add_argument('-p', '--play', action='store_true', help='Generate and play the audio for the summary')
+
+    args = parser.parse_args()
+
+    language, charset = locale.getdefaultlocale()
+    language, country = language.split('_', 2)
+    lang = language
+    chosen_language = args.lang or lang
+    default_lang = gettext.translation('messages', 'src/aerocast/locales', languages=[chosen_language], fallback=True)
+    default_lang.install()
 
     print(_("Welcome to AeroCast, your airport weather manager!"))
-    
-    # Exemple d'utilisation des gestionnaires
-    airport_code = "KJFK"  # Code OACI de l'aéroport Charles de Gaulle
-    lang = "fr"
-
-    weather = WeatherManager(airport_code) # , lang
-    summary = weather.get_summarize()
+    wm = WeatherManager(args.OACI, lang=chosen_language)
+    summary = wm.get_summarize()
     print(summary)
-    weather.play_text(summary)
-    #weather.get_wind_speed()
-    #weather.get_temperature()
+    if args.play:
+        wm.play_text(summary)
+
+    #wm.get_wind_speed()
+    #wm.get_temperature()
 
     #airport_manager = AirportManager(airport_code)
 
 if __name__ == "__main__":
-    main()
+   main()
