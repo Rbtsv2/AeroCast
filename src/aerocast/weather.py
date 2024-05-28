@@ -10,6 +10,8 @@ _ = lang_translations.gettext
 
 DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
+api = API()
+
 class WeatherManager:
     def __init__(self, airport_code, lang=None):
         if lang is None:
@@ -31,14 +33,14 @@ class WeatherManager:
         raise ValueError(_("No airport matching %s") % airport_code)
     
     def get_weather_data(self):
-        airports = API.fetch_data('data/metar', {'ids': self.airport_code, 'format': 'json'})
+        airports = api.get_metar_data(self.airport_code)
         weather_data = airports[0] if len(airports) == 1 else airports
         if not weather_data:
             raise ValueError(_("No weather data available"))
         return weather_data
 
     def get_airport_data(self):
-        airports = API.fetch_data('data/airport', {'ids': self.airport_code, 'format': 'json'})
+        airports = api.get_airport_data(self.airport_code)
         return airports[0] if len(airports) == 1 else WeatherManager.filter_by_iata(airports, self.airport_code)
 
     def extract_metar_info(data: dict, converters=DEFAULT_CONVERTERS):
