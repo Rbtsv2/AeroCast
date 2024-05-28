@@ -1,5 +1,6 @@
 # aerocast/api.py
 import requests
+import warnings
 from threading import Lock
 
 class API:
@@ -21,6 +22,7 @@ class API:
         self.request_lock.acquire()
         kwargs['params'].update({'format': 'json'})
         result = self.request_session.post(f"{API.BASE_URL}/{endpoint}", data, json, **kwargs)
+        result.raise_for_status()
         self.request_lock.release()
         return result
  
@@ -28,6 +30,7 @@ class API:
         self.request_lock.acquire()
         kwargs['params'].update({'format': 'json'})
         result = self.request_session.get(f"{API.BASE_URL}/{endpoint}", **kwargs)
+        result.raise_for_status()
         self.request_lock.release()
         return result
 
@@ -43,14 +46,13 @@ class API:
             data = response.json()
             return data[0] if len(data) == 1 else API.filter_by_iata(data, airport_code)
 
-
     @staticmethod
     def fetch_data(endpoint, params):
-        try:
-            response = requests.get(f"{API.BASE_URL}/{endpoint}", params=params)
-            if response.ok:
-                return response.json()
-            else:
-                raise ValueError(f"Failed to fetch weather data (HTTP {response.status_code})")
-        except requests.RequestException as e:
-            print(f"API Error: {e}")
+        warnings.warn('fetch_data is deprecated, use get_metar_data or get_airport_data instead', DeprecationWarning)
+        r = requests.get(f"{API.BASE_URL}/{endpoint}", params=params)
+        r.raise_for_status()
+        if r.ok:
+            data = r.json()
+            return data[0] if len(data) == 1 else API.filter_by_iata(data, airport_code)
+        else:
+            raise ValueError(f"Failed to fetch weather data (HTTP {r.status_code})")
