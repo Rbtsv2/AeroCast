@@ -11,9 +11,6 @@ api = API()
 
 class WeatherManager:
     def __init__(self, airport_code, lang=None):
-        # global lang_translations
-        # lang_translations = gettext.translation('messages', localedir='src/aerocast/locales', languages=[lang], fallback=True)
-        # _ = lang_translations.gettext
         self.airport_code = airport_code
         self.lang = lang
         self.tts_manager = TextToSpeechManager(lang)
