@@ -35,16 +35,14 @@ class API:
         return result
 
     def get_metar_data(self, airport_code):
-        response = self._request_get('data/metar', params={'ids': airport_code})
-        if response.ok:
-            data = response.json()
-            return data[0]
+        r = self._request_get('data/metar', params={'ids': airport_code})
+        if r.ok:
+            return r.json()
 
     def get_airport_data(self, airport_code):
-        response = self._request_get('data/airport', params={'ids': airport_code})
-        if response.ok:
-            data = response.json()
-            return data[0] if len(data) == 1 else API.filter_by_iata(data, airport_code)
+        r = self._request_get('data/airport', params={'ids': airport_code})
+        if r.ok:
+            return r.json()
 
     @staticmethod
     def fetch_data(endpoint, params):
@@ -52,7 +50,6 @@ class API:
         r = requests.get(f"{API.BASE_URL}/{endpoint}", params=params)
         r.raise_for_status()
         if r.ok:
-            data = r.json()
-            return data[0] if len(data) == 1 else API.filter_by_iata(data, airport_code)
+            return r.json()
         else:
             raise ValueError(f"Failed to fetch weather data (HTTP {r.status_code})")
