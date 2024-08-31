@@ -118,8 +118,11 @@ class WeatherManager:
 
         for cloud in clouds:
             d = Distance()
-            d.foot = cloud['base']
-            clouds_text.append(f"{WeatherManager.traduire_abreviation(cloud['cover'])} à {round(d.kilometer, 2)} km d'attitude")
+            if cloud['base']:
+                d.foot = cloud['base']
+                clouds_text.append(f"{WeatherManager.traduire_abreviation(cloud['cover'])} à {round(d.kilometer, 2)} km d'attitude")
+            else:
+                clouds_text.append(f"{WeatherManager.traduire_abreviation(cloud['cover'])} sans altitude")
 
 
         # Construction du résumé météorologique
