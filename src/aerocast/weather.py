@@ -1,9 +1,22 @@
 # aerocast/weather.py
-from .api import API
+from .api import API, __package__
 from .tts_manager import TextToSpeechManager
 from .converter import name_converter, distance_converter, Distance, ConverterDict
 import os
 import gettext, locale
+
+# THIS CODE IS FOR IMPORTANT THE RIGHT LOCALES PATH WHEREVER THE CODER IS CALLED FROM #
+
+try:
+    __path__
+except NameError:
+    import importlib
+    pkg = importlib.import_module(__package__)
+    __path__ = pkg.__path__[0]
+finally:
+    pass#print(f"path: {__path__}")
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 DEFAULT_CONVERTERS = {"name": name_converter, "visib": distance_converter}
 
@@ -13,6 +26,17 @@ class WeatherManager:
     def __init__(self, airport_code, lang=None):
         self.airport_code = airport_code
         self.lang = lang
+
+        language = locale.getlocale()[0]
+        language, country = language.split('_', 2)
+        chosen_language = lang or language
+        locales_path = os.path.join(__path__, 'locales')
+
+        default_lang = gettext.translation('messages', locales_path, languages=[chosen_language], fallback=True)
+        default_lang.install()
+
+        _ = default_lang.gettext
+
         self.tts_manager = TextToSpeechManager(lang)
 
     def play_text(self, text):
