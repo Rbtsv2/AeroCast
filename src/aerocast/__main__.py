@@ -12,7 +12,7 @@ def main():
 
     args = parser.parse_args()
 
-    language = locale.getdefaultlocale()[0]
+    language = locale.getlocale()[0]
     chosen_language = args.lang or language
     default_lang = gettext.translation('messages', 'src/aerocast/locales', languages=[chosen_language], fallback=True)
     default_lang.install()
