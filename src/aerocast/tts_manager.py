@@ -10,11 +10,14 @@ class TextToSpeechManager:
     def play_text(self, text: str):
         success = False
         try:
-            tts = gTTS(text, lang=self.lang)
+            if self.lang:
+                tts = gTTS(text, lang=self.lang)
+            else:
+                tts = gTTS(text)
             tts.save(self.filename)
             playsound(self.filename)
             success = True
         except Exception as e:
-            print(e)
+            print(f"func play_text -> {e}")
         finally:
             return success

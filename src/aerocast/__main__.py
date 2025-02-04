@@ -20,7 +20,7 @@ def main():
 
 
     print(_("Welcome to AeroCast, your airport weather manager!"))
-    wm = WeatherManager(args.OACI, lang=args.lang)
+    wm = WeatherManager(args.OACI, lang=chosen_language)
     summary = wm.get_summarize()
     print(summary)
     if args.play:
