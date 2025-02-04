@@ -3,7 +3,6 @@ from aerocast.weather import WeatherManager
 from aerocast.airport import AirportManager
 import gettext, locale, argparse
 
-
 def main():
     parser = argparse.ArgumentParser(prog='AeroCast', description='A program for providing weather information for airports.')
     parser.add_argument('OACI')
@@ -12,17 +11,16 @@ def main():
 
     args = parser.parse_args()
 
-    language = locale.getdefaultlocale()[0]
+    language = locale.getlocale()[0].split('_')[0]
     chosen_language = args.lang or language
-    default_lang = gettext.translation('messages', 'src/aerocast/locales', languages=[chosen_language], fallback=True)
+    default_lang = gettext.translation('messages', 'locales', languages=[chosen_language], fallback=True)
     default_lang.install()
 
-
-
     print(_("Welcome to AeroCast, your airport weather manager!"))
-    wm = WeatherManager(args.OACI, lang=args.lang)
+    wm = WeatherManager(args.OACI, lang=chosen_language)
     summary = wm.get_summarize()
     print(summary)
+
     if args.play:
         wm.play_text(summary)
 

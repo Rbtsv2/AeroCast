@@ -9,14 +9,14 @@ def read_file(filename):
 
 setup(
     name='AeroCast',
-    version='0.1.0',
+    version='0.1.4',
     description='A Python package for providing weather information for airports.',
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     url='https://github.com/Rbtsv2/AeroCast',
     author='Charles FOURNIER',
     author_email='charles.fournier@fih.digital',
-    license='MIT',
+    license_files=['LICENSE'],
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     classifiers=[
