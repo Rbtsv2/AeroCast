@@ -31,7 +31,7 @@ setup(
         'Topic :: Scientific/Engineering :: Atmospheric Science',
     ],
     keywords=['weather', 'airport', 'METAR', 'TAF', 'aviation', 'forecast'],
-    install_requires=['requests', 'gtts', 'playsound3'],
+    install_requires=['requests', 'gtts', 'playsound3', 'Babel'],
     python_requires='>=3.7',
     include_package_data=True,
     zip_safe=False,

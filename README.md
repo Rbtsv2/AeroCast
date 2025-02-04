@@ -85,6 +85,8 @@ mkdir /votre_chemin/aerocast
 cd /votres_chemin/aerocast
 git clone https://github.com/Rbtsv2/AeroCast.git .
 pip install -e .
+
+aerocast
 ```
 
 
