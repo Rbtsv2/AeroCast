@@ -16,7 +16,7 @@ setup(
     url='https://github.com/Rbtsv2/AeroCast',
     author='Charles FOURNIER',
     author_email='charles.fournier@fih.digital',
-    license='MIT',
+    license_files=['LICENSE'],
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     classifiers=[
