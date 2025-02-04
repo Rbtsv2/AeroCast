@@ -9,7 +9,7 @@ def read_file(filename):
 
 setup(
     name='AeroCast',
-    version='0.1.3',
+    version='0.1.4',
     description='A Python package for providing weather information for airports.',
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
